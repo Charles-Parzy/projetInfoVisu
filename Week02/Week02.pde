@@ -83,10 +83,9 @@ float[] matrixProduct(float[][] a, float[] b) {
 
 My3DBox transformBox(My3DBox box, float[][] transformMatrix) {
   My3DPoint[] points = new My3DPoint[box.p.length];
-  float[] multMatrix = new float[transformMatrix.length];
   for (int i=0; i < points.length; i++) {
     float[] p = homogeneous3DPoint(box.p[i]);
-    multMatrix = matrixProduct(transformMatrix, p);
+    float[] multMatrix = matrixProduct(transformMatrix, p);
     points[i] = euclidian3DPoint(multMatrix);
   }
   return new My3DBox(points);
