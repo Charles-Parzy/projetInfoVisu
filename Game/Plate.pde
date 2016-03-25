@@ -6,6 +6,7 @@ class Plate {
   float angleX = 0;
   float angleZ = 0;
   float speedAngle = 0.1;
+  ArrayList<PVector> cylinders = new ArrayList<PVector>();
 
   Plate(float x, float y, float z ) {
     boxWidth = x;
@@ -13,39 +14,63 @@ class Plate {
     boxHeight = z;
   }
 
-  void display() { 
-    translate(width/2, height/2, 0);
-    rotateX(angleX);
-    rotateZ(angleZ);
-    fill(240,109,109);
-    box(boxWidth, boxThickness, boxHeight);
+  void display() {
+    if (currentState.equals(GameState.GAME)) {
+      translate(width/2, height/2, 0);
+      rotateX(plate.angleX);
+      rotateZ(plate.angleZ);
+      fill(240, 109, 109);
+      box(boxWidth, boxThickness, boxHeight);
+      for (PVector v : cylinders) {
+        pushMatrix();
+        rotateX(PI/2);
+        translate(v.x, v.y, boxThickness/2);
+        fill(196);
+        Cylinder cylinder = new Cylinder();
+        cylinder.drawCylinder();
+        popMatrix();
+      }
+    } else {
+      fill(190);
+      rect(-boxWidth/2, -boxHeight/2, boxWidth, boxHeight);
+      for (PVector v : cylinders) {
+        pushMatrix();
+        translate(v.x, v.y, boxThickness/2);
+        fill(67, 65, 65);
+        Cylinder cylinder = new Cylinder();
+        cylinder.drawCylinder();
+        popMatrix();
+      }
+    }
   }
-  
+
   void mouseDragged() {
-    if (pmouseY - mouseY > 0) {
-      if (angleX < PI/3) { 
-        angleX += speedAngle;
-      } else {
-        angleX = PI/3;
-      }
-    } else if (pmouseY - mouseY < 0) {
-      if (angleX > -PI/3) {
-        angleX -= speedAngle;
-      } else {
-        angleX = -PI/3;
-      }
-    } 
-    if (pmouseX - mouseX < 0) {
-      if (angleZ < PI/3) {
-        angleZ += speedAngle;
-      } else {
-        angleZ = PI/3;
-      }
-    } else if (pmouseX - mouseX > 0) {
-      if (angleZ > -PI/3) {
-        angleZ -= speedAngle;
-      } else {
-        angleZ = -PI/3;
+    if (currentState.equals(GameState.GAME)) {
+      if (pmouseY - mouseY > 0) {
+        if (angleX < PI/3) { 
+          angleX += speedAngle;
+        } else {
+          angleX = PI/3;
+        }
+      } else if (pmouseY - mouseY < 0) {
+        if (angleX > -PI/3) {
+          angleX -= speedAngle;
+        } else {
+          angleX = -PI/3;
+        }
+      } 
+      if (pmouseX - mouseX < 0) {
+        if (angleZ < PI/3) {
+          angleZ += speedAngle;
+        } else {
+          angleZ = PI/3;
+        }
+      } else if (pmouseX - mouseX > 0) {
+        if (angleZ > -PI/3) {
+          angleZ -= speedAngle;
+        } else {
+          angleZ = -PI/3;
+        }
       }
     }
   }
@@ -55,16 +80,35 @@ class Plate {
     float maxSpeed = 0.4;
     float minSpeed = 0.02;
     float speedChange = 0.02;
-    if (e > 0) {
-      speedAngle += speedChange;
-      if (speedAngle > maxSpeed) {
-        speedAngle = maxSpeed;
-      }
-    } else if (e < 0) {
-      speedAngle -= speedChange;
-      if (speedAngle < minSpeed) {
-        speedAngle = minSpeed;
+    if (currentState.equals(GameState.GAME)) {
+      if (e > 0) {
+        speedAngle += speedChange;
+        if (speedAngle > maxSpeed) {
+          speedAngle = maxSpeed;
+        }
+      } else if (e < 0) {
+        speedAngle -= speedChange;
+        if (speedAngle < minSpeed) {
+          speedAngle = minSpeed;
+        }
       }
     }
   }
+
+  void addCylinder() {
+    float widthRatio = depthCamera/width; // BESOIN DE CE RATIO A CAUSE DE LA POSITION DE LA CAMERA
+    float heightRatio = depthCamera/height; // a cause des distances, qui sont pas égales vu de loins que de près
+    float xPos = (mouseX-(width/2)) * widthRatio;
+    float yPos = (mouseY-(height/2)) * heightRatio;
+    float radiusCylinder = Cylinder.cylinderBaseSize/2;
+    if (mouseX >= (width/2 + radiusCylinder - boxWidth/(2*widthRatio)) 
+      && mouseX <= (width/2 - radiusCylinder + boxWidth/(2*widthRatio))
+      && mouseY >= (height/2 + radiusCylinder - boxHeight/(2*heightRatio))
+      && mouseY <= (height/2 - radiusCylinder + boxHeight/(2*heightRatio))) {
+
+      cylinders.add(new PVector(xPos, yPos));
+    }
+  }
+  
+  
 }
