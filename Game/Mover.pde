@@ -1,9 +1,10 @@
+  PVector location;
+
 class Mover {
   final float normalForce = 1;
-  final float mu = 0.1;
+  final float mu = 0.2;
   final float frictionMagnitude = normalForce * mu;
   final float gravityConstant = 1;
-  PVector location;
   PVector velocity;
   PVector gravity;
   PVector friction;
@@ -30,11 +31,11 @@ class Mover {
     location.add(velocity);
   }
   void display() {
-    if(currentState.equals(GameState.GAME)) {
+    if (currentState.equals(GameState.GAME)) {
       translate(location.x, location.y, location.z);
       balle.drawBalle();
-    }else{
-      fill(0,255,0);
+    } else {
+      fill(0, 255, 0);
       ellipse(location.x, location.z, balle.radius+40, balle.radius+40);
     }
   }
@@ -59,10 +60,19 @@ class Mover {
       velocity.z *= -0.7;
     }
   }
-  
+
   void checkCylinderCollision() {
-    for(PVector v : plate.cylinders) {
-      //TODO 
+    for (PVector c : plate.cylinders) {
+      PVector distance = new PVector(c.x - location.x, c.y - location.z);
+
+      if (distance.mag() < balle.radius + cylinderBaseSize/2) {
+        PVector tempVelocity = new PVector(velocity.x, velocity.z);
+        PVector n = new PVector(location.x - c.x, location.z - c.y).normalize();
+        n = n.mult(2*PVector.dot(tempVelocity, n));
+        PVector V2 = PVector.sub(tempVelocity, n);
+        velocity = new PVector(V2.x, velocity.y, V2.y);
+        location.add(velocity);
+      }
     }
   }
 }

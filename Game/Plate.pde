@@ -100,15 +100,24 @@ class Plate {
     float heightRatio = depthCamera/height; // a cause des distances, qui sont pas égales vu de loins que de près
     float xPos = (mouseX-(width/2)) * widthRatio;
     float yPos = (mouseY-(height/2)) * heightRatio;
-    float radiusCylinder = Cylinder.cylinderBaseSize/2;
+    float radiusCylinder = cylinderBaseSize/2;
     if (mouseX >= (width/2 + radiusCylinder - boxWidth/(2*widthRatio)) 
       && mouseX <= (width/2 - radiusCylinder + boxWidth/(2*widthRatio))
       && mouseY >= (height/2 + radiusCylinder - boxHeight/(2*heightRatio))
       && mouseY <= (height/2 - radiusCylinder + boxHeight/(2*heightRatio))) {
 
-      cylinders.add(new PVector(xPos, yPos));
+      PVector distanceFromBalle = new PVector(location.x - xPos, location.z - yPos);
+      boolean clearCylinders = true; //Pas de cylinder l'un sur l'autre
+      if (distanceFromBalle.mag() > balle.radius + cylinderBaseSize/2) { //Pas ajouter de cylinder SUR la balle      
+        for (PVector c : cylinders) {
+          PVector distanceCylinders = new PVector(c.x - xPos, c.y - yPos);
+          if (distanceCylinders.mag() < cylinderBaseSize*2) { //Pas d'empillement de cylindre
+            clearCylinders = false;
+          }
+        }
+        if (clearCylinders)
+          cylinders.add(new PVector(xPos, yPos));
+      }
     }
   }
-  
-  
 }

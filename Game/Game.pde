@@ -31,6 +31,7 @@ void draw() {
     plate.display();
     mover.update();
     mover.checkEdges();
+    mover.checkCylinderCollision();
     mover.display();
   }else{
     camera(0, 0, depthCamera, 0, 0, 0, 0, 1, 0);
