@@ -65,7 +65,6 @@ class Mover {
   void checkCylinderCollision() {
     for (PVector c : plate.cylinders) {
       PVector distance = new PVector(c.x - location.x, c.y - location.z);
-
       if (distance.mag() < balle.radius + cylinderBaseSize/2) { 
         PVector tempVelocity = new PVector(velocity.x, velocity.z);
         location.sub(velocity.x, 0, velocity.z);    
