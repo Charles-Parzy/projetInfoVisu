@@ -12,6 +12,7 @@ Plate plate;
 Balle balle;
 Mover mover;
 Cylinder cylinder;
+static final float ELASTICITYCONSTANT = 0.7;
 
 void settings() {
   size(700, 700, P3D);
@@ -29,6 +30,7 @@ void draw() {
     ambientLight(102, 102, 102);
     background(200);
     plate.display();
+    
     mover.update();
     mover.checkEdges();
     mover.checkCylinderCollision();
@@ -37,7 +39,7 @@ void draw() {
     camera(0, 0, depthCamera, 0, 0, 0, 0, 1, 0);
     directionalLight(50, 100, 125, 0, -1, 0);
     ambientLight(102, 102, 102);
-    background(200);
+    background(246,184,96);
     plate.display();
     mover.display();
   }

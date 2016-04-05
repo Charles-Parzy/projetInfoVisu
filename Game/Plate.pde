@@ -32,7 +32,7 @@ class Plate {
       }
     } else {
       fill(190);
-      rect(-boxWidth/2, -boxHeight/2, boxWidth, boxHeight);
+      rect(-boxWidth/2, -boxHeight/2, boxWidth, boxHeight); // pourquoi utiliser rect?
       for (PVector v : cylinders) {
         pushMatrix();
         translate(v.x, v.y, boxThickness/2);
@@ -101,7 +101,7 @@ class Plate {
     float xPos = (mouseX-(width/2)) * widthRatio;
     float yPos = (mouseY-(height/2)) * heightRatio;
     float radiusCylinder = cylinderBaseSize/2;
-    if (mouseX >= (width/2 + radiusCylinder - boxWidth/(2*widthRatio)) 
+    if (mouseX >= (width/2 + radiusCylinder - boxWidth/(2*widthRatio)) // pour ne pas dessiner or de la plaque.
       && mouseX <= (width/2 - radiusCylinder + boxWidth/(2*widthRatio))
       && mouseY >= (height/2 + radiusCylinder - boxHeight/(2*heightRatio))
       && mouseY <= (height/2 - radiusCylinder + boxHeight/(2*heightRatio))) {

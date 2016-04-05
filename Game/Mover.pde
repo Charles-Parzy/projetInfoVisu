@@ -10,6 +10,7 @@ class Mover {
   PVector friction;
   Plate plate;
   Balle balle;
+  static final float DELTA=0.7;
 
   Mover(Plate plate, Balle balle) {
     location = new PVector(0, -plate.boxThickness/2 - balle.radius, 0);
@@ -19,7 +20,7 @@ class Mover {
     this.plate = plate;
     this.balle = balle;
   }
-  void update() {
+  void update() { // peut on ajouter une constante d'élasticité?
     friction = velocity.copy();
     friction.mult(-1);
     friction.normalize();
@@ -36,7 +37,7 @@ class Mover {
       balle.drawBalle();
     } else {
       fill(0, 255, 0);
-      ellipse(location.x, location.z, balle.radius+40, balle.radius+40);
+      ellipse(location.x, location.z, balle.radius+40, balle.radius+40); // pourquoi utiliser ellipse.
     }
   }
   void checkEdges() {
@@ -47,7 +48,7 @@ class Mover {
       if (location.x < - plate.boxWidth/2) {
         location.x = - plate.boxWidth/2;
       }
-      velocity.x *= -0.7;
+      velocity.x *= -0.7; // constante d'elasticité.
     } 
 
     if (location.z >= plate.boxHeight/2 || location.z <= -plate.boxHeight/2) {
@@ -66,12 +67,27 @@ class Mover {
       PVector distance = new PVector(c.x - location.x, c.y - location.z);
 
       if (distance.mag() < balle.radius + cylinderBaseSize/2) {
-        PVector tempVelocity = new PVector(velocity.x, velocity.z);
+        
+        PVector tempVelocity ;
+        float recul=(float)Math.sqrt((c.x-location.x)*(c.x-location.x) +(c.z-location.z)*(c.z-location.z));
+        println("velocity "+velocity);
+        println(recul);
+
+        tempVelocity = new PVector(velocity.x,velocity.z);
+        
+        location.sub(velocity.x,0,velocity.z);    
+    
+                
+        
         PVector n = new PVector(location.x - c.x, location.z - c.y).normalize();
         n = n.mult(2*PVector.dot(tempVelocity, n));
         PVector V2 = PVector.sub(tempVelocity, n);
+        
         velocity = new PVector(V2.x, velocity.y, V2.y);
-        location.add(velocity);
+     
+        
+        
+        location.add(velocity.mult(ELASTICITYCONSTANT));
       }
     }
   }
