@@ -2,7 +2,6 @@ enum GameState {
   GAME, 
     PLACEMENT;
 }
-
 GameState currentState = GameState.GAME;
 
 float depthCamera = 2000;
@@ -12,7 +11,6 @@ Plate plate;
 Balle balle;
 Mover mover;
 Cylinder cylinder;
-static final float ELASTICITYCONSTANT = 0.7;
 
 void settings() {
   size(700, 700, P3D);
@@ -24,51 +22,47 @@ void setup() {
   mover = new Mover(plate, balle);
 }
 void draw() {
-  if(currentState.equals(GameState.GAME)) {
+  directionalLight(50, 100, 125, 0, -1, 0);
+  ambientLight(102, 102, 102);
+  background(200);
+  if (currentState.equals(GameState.GAME)) {
     camera(width/2, height/2, depthCamera, 250, 250, 0, 0, 1, 0);
-    directionalLight(50, 100, 125, 0, -1, 0);
-    ambientLight(102, 102, 102);
-    background(200);
-    plate.display();
-    
+    plate.display();  
     mover.update();
     mover.checkEdges();
     mover.checkCylinderCollision();
     mover.display();
-  }else{
+  } else {
     camera(0, 0, depthCamera, 0, 0, 0, 0, 1, 0);
-    directionalLight(50, 100, 125, 0, -1, 0);
-    ambientLight(102, 102, 102);
-    background(246,184,96);
     plate.display();
     mover.display();
   }
 }
-  void mouseWheel(MouseEvent event) {
-    plate.mouseWheel(event);
-  }
-  void mouseDragged() {
-    plate.mouseDragged();
-  }
+void mouseWheel(MouseEvent event) {
+  plate.mouseWheel(event);
+}
+void mouseDragged() {
+  plate.mouseDragged();
+}
 
-  void keyPressed() {
-    if (key == CODED) {
-      if (keyCode == SHIFT) {
-        currentState = GameState.PLACEMENT;
-      }
+void keyPressed() {
+  if (key == CODED) {
+    if (keyCode == SHIFT) {
+      currentState = GameState.PLACEMENT;
     }
   }
+}
 
-  void keyReleased() {
-    if (key == CODED) {
-      if (keyCode == SHIFT) {
-        currentState = GameState.GAME;
-      }
+void keyReleased() {
+  if (key == CODED) {
+    if (keyCode == SHIFT) {
+      currentState = GameState.GAME;
     }
   }
+}
 
-  void mouseClicked() {
-    if (currentState.equals(GameState.PLACEMENT)) {
-      plate.addCylinder();
-    }
+void mouseClicked() {
+  if (currentState.equals(GameState.PLACEMENT)) {
+    plate.addCylinder();
   }
+}
