@@ -1,4 +1,4 @@
-  float cylinderBaseSize = 50;
+float cylinderBaseSize = 50;
 class Cylinder {
   float cylinderHeight = 120;
   int cylinderResolution = 40;

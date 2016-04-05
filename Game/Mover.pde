@@ -1,4 +1,5 @@
-  PVector location;
+PVector location;
+float ELASTICITYCONSTANT = 0.7;
 
 class Mover {
   final float normalForce = 1;
@@ -10,7 +11,6 @@ class Mover {
   PVector friction;
   Plate plate;
   Balle balle;
-  static final float DELTA=0.7;
 
   Mover(Plate plate, Balle balle) {
     location = new PVector(0, -plate.boxThickness/2 - balle.radius, 0);
@@ -20,7 +20,7 @@ class Mover {
     this.plate = plate;
     this.balle = balle;
   }
-  void update() { // peut on ajouter une constante d'élasticité?
+  void update() { 
     friction = velocity.copy();
     friction.mult(-1);
     friction.normalize();
@@ -48,7 +48,7 @@ class Mover {
       if (location.x < - plate.boxWidth/2) {
         location.x = - plate.boxWidth/2;
       }
-      velocity.x *= -0.7; // constante d'elasticité.
+      velocity.x *= -ELASTICITYCONSTANT;
     } 
 
     if (location.z >= plate.boxHeight/2 || location.z <= -plate.boxHeight/2) {
@@ -58,7 +58,7 @@ class Mover {
       if (location.z < -plate.boxHeight/2) {
         location.z = -plate.boxHeight/2;
       }
-      velocity.z *= -0.7;
+      velocity.z *= -ELASTICITYCONSTANT;
     }
   }
 
@@ -66,27 +66,13 @@ class Mover {
     for (PVector c : plate.cylinders) {
       PVector distance = new PVector(c.x - location.x, c.y - location.z);
 
-      if (distance.mag() < balle.radius + cylinderBaseSize/2) {
-        
-        PVector tempVelocity ;
-        float recul=(float)Math.sqrt((c.x-location.x)*(c.x-location.x) +(c.z-location.z)*(c.z-location.z));
-        println("velocity "+velocity);
-        println(recul);
-
-        tempVelocity = new PVector(velocity.x,velocity.z);
-        
-        location.sub(velocity.x,0,velocity.z);    
-    
-                
-        
+      if (distance.mag() < balle.radius + cylinderBaseSize/2) { 
+        PVector tempVelocity = new PVector(velocity.x, velocity.z);
+        location.sub(velocity.x, 0, velocity.z);    
         PVector n = new PVector(location.x - c.x, location.z - c.y).normalize();
         n = n.mult(2*PVector.dot(tempVelocity, n));
         PVector V2 = PVector.sub(tempVelocity, n);
-        
         velocity = new PVector(V2.x, velocity.y, V2.y);
-     
-        
-        
         location.add(velocity.mult(ELASTICITYCONSTANT));
       }
     }
