@@ -69,7 +69,7 @@ class Mover {
         PVector tempVelocity = new PVector(velocity.x, velocity.z);
         PVector n = new PVector(location.x - c.x, location.z - c.y);
         PVector unit = n.copy().normalize();
-        PVector tempLoc = c.copy().add(unit.copy().mult(n.mag()+balle.radius));
+        PVector tempLoc = c.copy().add(unit.copy().mult(n.mag()+balle.radius/4));
         location = new PVector(tempLoc.x, -plate.boxThickness/2 - balle.radius, tempLoc.y);
         tempVelocity.sub(unit.mult(2 * (tempVelocity.copy().dot(unit)))).mult(ELASTICITYCONSTANT);
         velocity = new PVector(tempVelocity.x, 0, tempVelocity.y);
