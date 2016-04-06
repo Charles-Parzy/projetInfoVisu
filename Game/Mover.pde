@@ -67,12 +67,12 @@ class Mover {
       PVector distance = new PVector(c.x - location.x, c.y - location.z);
       if (distance.mag() < balle.radius + cylinderBaseSize/2) { 
         PVector tempVelocity = new PVector(velocity.x, velocity.z);
-        location.sub(velocity.x, 0, velocity.z);    
-        PVector n = new PVector(location.x - c.x, location.z - c.y).normalize();
-        n = n.mult(2*PVector.dot(tempVelocity, n));
-        PVector V2 = PVector.sub(tempVelocity, n);
-        velocity = new PVector(V2.x, velocity.y, V2.y);
-        location.add(velocity.mult(ELASTICITYCONSTANT));
+        PVector n = new PVector(location.x - c.x, location.z - c.y);
+        PVector unit = n.copy().normalize();
+        PVector tempLoc = c.copy().add(unit.copy().mult(n.mag()+balle.radius));
+        location = new PVector(tempLoc.x, -plate.boxThickness/2 - balle.radius, tempLoc.y);
+        tempVelocity.sub(unit.mult(2 * (tempVelocity.copy().dot(unit)))).mult(ELASTICITYCONSTANT);
+        velocity = new PVector(tempVelocity.x, 0, tempVelocity.y);
       }
     }
   }

@@ -111,7 +111,7 @@ class Plate {
       if (distanceFromBalle.mag() > balle.radius + cylinderBaseSize/2) { //Pas ajouter de cylinder SUR la balle      
         for (PVector c : cylinders) {
           PVector distanceCylinders = new PVector(c.x - xPos, c.y - yPos);
-          if (distanceCylinders.mag() < cylinderBaseSize*3) { //Pas d'empillement de cylindre
+          if (distanceCylinders.mag() < cylinderBaseSize*2) { //Pas d'empillement de cylindre
             clearCylinders = false;
           }
         }
