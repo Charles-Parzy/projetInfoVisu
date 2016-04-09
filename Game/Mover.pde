@@ -9,6 +9,8 @@ class Mover {
   PVector velocity;
   PVector gravity;
   PVector friction;
+  float currentScore;
+  float lastScore;
   Plate plate;
   Balle balle;
 
@@ -48,6 +50,8 @@ class Mover {
       if (location.x < - plate.boxWidth/2) {
         location.x = - plate.boxWidth/2;
       }
+      lastScore = -velocity.mag();
+      currentScore += lastScore;
       velocity.x *= -ELASTICITYCONSTANT;
     } 
 
@@ -58,6 +62,8 @@ class Mover {
       if (location.z < -plate.boxHeight/2) {
         location.z = -plate.boxHeight/2;
       }
+      lastScore = currentScore;
+      currentScore -= velocity.mag();
       velocity.z *= -ELASTICITYCONSTANT;
     }
   }
@@ -65,7 +71,7 @@ class Mover {
   void checkCylinderCollision() {
     for (PVector c : plate.cylinders) {
       PVector distance = new PVector(c.x - location.x, c.y - location.z);
-      if (distance.mag() < balle.radius + cylinderBaseSize/2) { 
+      if (distance.mag() < balle.radius + cylinderBaseSize/2) {
         PVector tempVelocity = new PVector(velocity.x, velocity.z);
         PVector n = new PVector(location.x - c.x, location.z - c.y);
         PVector unit = n.copy().normalize();
@@ -73,6 +79,8 @@ class Mover {
         location = new PVector(tempLoc.x, -plate.boxThickness/2 - balle.radius, tempLoc.y);
         tempVelocity.sub(unit.mult(2 * (tempVelocity.copy().dot(unit)))).mult(ELASTICITYCONSTANT);
         velocity = new PVector(tempVelocity.x, 0, tempVelocity.y);
+        lastScore = currentScore;
+        currentScore += velocity.mag();
       }
     }
   }
