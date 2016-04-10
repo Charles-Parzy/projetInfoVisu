@@ -1,4 +1,7 @@
 ArrayList<Float> listScores = new ArrayList<Float>();
+int scaleFactor = 1;
+float blockSize = 5;
+
 
 void drawData() {
   dataBackground.beginDraw();
@@ -55,29 +58,21 @@ void drawScore() {
   scoreboard.endDraw();
 }
 
-void drawBarChart() {
-  
-  //C'est juste un essaie mais sa marche pas, il faudrait corrigé !
-  float blockWidth = 10*hs.getPos();
-  float blockHeight = 10;
-    
+void drawBarChart() {  
   listScores.add(mover.lastScore);
-
   barChart.beginDraw();
-  barChart.noStroke();
   barChart.background(238, 235, 201);
-  barChart.translate(10, 0);
-  barChart.fill(255, 0, 0);
-  for (float score : listScores) {
-    int h = round(score*barChart.height/1000);
-    int nbBlock = round(h/blockHeight);
-
-    for (int i = 0; i < nbBlock; i++) {
-      //Le seul truc qui est 100%, j'ai testé et sa les dessine au bon endroit
-      barChart.rect(0, barChart.height - ((blockHeight + blockHeight/4)*i), blockWidth, blockHeight);
+  barChart.fill(0, 0, 255);
+  barChart.noStroke();
+  if (listScores.size() > 0) {
+    while (listScores.get(listScores.size() - 1)*1.3 / scaleFactor > barChart.height) {
+      scaleFactor *= 2;
     }
-    //sa fait buger je sais pas pourquoi !
-    barChart.translate(blockWidth + blockWidth/4, 0);
+  }
+  for(int i = 0; i < listScores.size(); i ++) {
+    for(int j = 0; j < listScores.get(i)/(blockSize*scaleFactor); j++) {
+      barChart.rect(blockSize * i * hs.getPos() * 1.5, barChart.height - (blockSize+blockSize/4) * (j+1), blockSize * hs.getPos(), blockSize);
+    }
   }
   barChart.endDraw();
 }
