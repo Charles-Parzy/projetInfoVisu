@@ -32,7 +32,7 @@ void drawTopView() {
   //Dessine les cylindres
   topView.fill(245, 222, 179);
   for (PVector c : plate.cylinders) {
-    topView.ellipse(c.x*scaleWidth, c.y*scaleWidth, 2*cylinderBaseSize*scaleWidth, 2*cylinderBaseSize*scaleHeight);
+    topView.ellipse(c.x*scaleWidth, c.y*scaleHeight, 2*cylinderBaseSize*scaleWidth, 2*cylinderBaseSize*scaleHeight);
   }
   topView.endDraw();
 }
