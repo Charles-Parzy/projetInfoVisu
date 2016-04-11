@@ -2,17 +2,19 @@ enum GameState {
   GAME, 
     PLACEMENT;
 }
-//Global variables
 GameState currentState = GameState.GAME;
 
-//Data Visualization
-PGraphics dataBackground;
-PGraphics topView;
-PGraphics scoreboard;
-PGraphics barChart;
-HScrollbar hs;
-
 float depthCamera = 2000;
+
+final int scaleConstant = 10;
+
+//Surface for data visualisation 
+PGraphics visualisationSurface;
+PGraphics topView;
+PGraphics scoreBoard;
+PGraphics barChart;
+//scrollbar
+HScrollbar hs;
 
 //Needed object for the game
 Plate plate;
@@ -20,20 +22,21 @@ Balle balle;
 Mover mover;
 Cylinder cylinder;
 
+
 void settings() {
   size(700, 700, P3D);
 }
 void setup() {
-  dataBackground = createGraphics(width, height/5, P2D);
-  topView = createGraphics(height/5 - 20, height/5 - 20, P2D);
-  scoreboard = createGraphics(height/5 - 40, height/5 - 20, P2D);
-  barChart = createGraphics(width - topView.width - scoreboard.width - 50, height/5 - 40, P2D); 
-  hs = new HScrollbar(topView.width + scoreboard.width + 40, height-25, 300, 15);
-  plate = new Plate(800, 20, 800);
-  balle = new Balle(40);
+  noStroke();
+  plate = new Plate(1000, 20, 1000);
+  balle = new Balle(50);
   mover = new Mover(plate, balle);
+  visualisationSurface = createGraphics(width, height/6, P2D);
+  topView = createGraphics(int(plate.boxWidth/scaleConstant), int(plate.boxHeight/scaleConstant), P2D);
+  scoreBoard = createGraphics(100 ,int(plate.boxHeight/scaleConstant), P2D);
+  barChart = createGraphics(430, int(plate.boxHeight/scaleConstant)-20, P2D);
+  hs = new HScrollbar(50, 90, 300, 20);
 }
-
 void draw() {
   directionalLight(50, 100, 125, 0, -1, 0);
   ambientLight(102, 102, 102);
@@ -54,8 +57,8 @@ void draw() {
     mover.display();
     popMatrix();
   }
-  noLights();
-  drawData();
+  noLights(); //Permet de colorier la surface d'une couleur différente de la balle.
+  drawSurface();
   hs.update();
   hs.display();
 }

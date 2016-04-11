@@ -32,7 +32,7 @@ class Plate {
       }
     } else {
       fill(190);
-      rect(-boxWidth/2, -boxHeight/2, boxWidth, boxHeight);
+      rect(-boxWidth/2, -boxHeight/2, boxWidth, boxHeight); // pourquoi utiliser rect?
       for (PVector v : cylinders) {
         pushMatrix();
         translate(v.x, v.y, boxThickness/2);
