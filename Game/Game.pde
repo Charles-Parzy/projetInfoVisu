@@ -31,11 +31,11 @@ void setup() {
   plate = new Plate(1000, 20, 1000);
   balle = new Balle(50);
   mover = new Mover(plate, balle);
-  visualisationSurface = createGraphics(width, height/6, P2D);
-  topView = createGraphics(int(plate.boxWidth/scaleConstant), int(plate.boxHeight/scaleConstant), P2D);
-  scoreBoard = createGraphics(100 ,int(plate.boxHeight/scaleConstant), P2D);
-  barChart = createGraphics(430, int(plate.boxHeight/scaleConstant)-20, P2D);
-  hs = new HScrollbar(50, 90, 300, 20);
+  visualisationSurface = createGraphics(width, height/5, P2D);
+  topView = createGraphics(height/5 - 20, height/5 - 20, P2D);
+  scoreBoard = createGraphics(height/5 - 40, height/5 - 20, P2D);
+  barChart = createGraphics(width - topView.width - scoreBoard.width - 50, height/5 - 40, P2D); 
+  hs = new HScrollbar(topView.width + scoreBoard.width + 40, height-25, 300, 15);
 }
 void draw() {
   directionalLight(50, 100, 125, 0, -1, 0);

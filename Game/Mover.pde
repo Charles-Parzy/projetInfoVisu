@@ -43,7 +43,7 @@ class Mover {
   }
   void checkEdges() {
     if (location.x >= plate.boxWidth/2 || location.x <= - plate.boxWidth/2) {
-      scores.add(-velocity.mag());
+      lastScore = totalScore;
       totalScore -= velocity.mag();
       if (location.x > plate.boxWidth/2) {
         location.x = plate.boxWidth/2;
@@ -55,7 +55,7 @@ class Mover {
     } 
 
     if (location.z >= plate.boxHeight/2 || location.z <= -plate.boxHeight/2) {
-      scores.add(-velocity.mag());
+      lastScore = totalScore;
       totalScore -= velocity.mag();
       if (location.z > plate.boxHeight/2) {
         location.z = plate.boxHeight/2;
@@ -70,8 +70,8 @@ class Mover {
   void checkCylinderCollision() {
     for (PVector c : plate.cylinders) {
       PVector distance = new PVector(c.x - location.x, c.y - location.z);
-      if (distance.mag() < balle.radius + cylinderBaseSize/2) { 
-        scores.add(velocity.mag());
+      if (distance.mag() < balle.radius + cylinderBaseSize/2) {
+        lastScore = totalScore;
         totalScore += velocity.mag();
         PVector tempVelocity = new PVector(velocity.x, velocity.z);
         PVector n = new PVector(location.x - c.x, location.z - c.y);
