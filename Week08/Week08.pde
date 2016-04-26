@@ -13,13 +13,9 @@ void setup() {
 }
 void draw() {
   background(color(0, 0, 0));
-  //image(img, 0, 0);
   filterHue(img);
-  
-  //gaussianBlur(resultHue); does not improve !
+  image(img, 0, 0);
   sobel(resultHue);
-  //hough(result);
-  
-  image(result, 0, 0);
+  hough(result);  
 }
   

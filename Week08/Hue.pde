@@ -7,9 +7,7 @@ void filterHue(PImage img) {
   float upperBrightness = 232;
   float lowerBrightness = 0;
   float upperSaturation = 260;
-  float lowerSaturation = 99;
-  
-  //brightness, staturation() THRESHOLDS !!!
+  float lowerSaturation = 99;  
   for (int i = 0; i < img.width * img.height; i++) {
     if (hue(img.pixels[i]) < upperHue && hue(img.pixels[i]) > lowerHue
         && brightness(img.pixels[i]) < upperBrightness && brightness(img.pixels[i]) > lowerBrightness
