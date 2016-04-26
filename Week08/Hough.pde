@@ -21,8 +21,7 @@ void hough(PImage edgeImg) {
         for (int phi=0; phi < phiDim; phi++) {
           float r = x * cos(phi*discretizationStepsPhi) + y * sin(phi*discretizationStepsPhi); 
           r /= discretizationStepsR;
-                    r += (rDim-1)/2;
-
+          r += (rDim-1)/2;
           accumulator[((phi+1) * (rDim+2) + (int)(r+1))] += 1;
         }
       }
@@ -39,7 +38,7 @@ void hough(PImage edgeImg) {
 
 
   for (int idx = 0; idx < accumulator.length; idx++) {
-    if (accumulator[idx] > 260) {
+    if (accumulator[idx] > 200) {
       // first, compute back the (r, phi) polar coordinates:
       int accPhi = (int) (idx / (rDim + 2)) - 1;
       int accR = idx - (accPhi + 1) * (rDim + 2) - 1;
