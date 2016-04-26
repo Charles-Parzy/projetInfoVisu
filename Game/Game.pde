@@ -35,7 +35,7 @@ void setup() {
   topView = createGraphics(height/5 - 20, height/5 - 20, P2D);
   scoreBoard = createGraphics(height/5 - 40, height/5 - 20, P2D);
   barChart = createGraphics(width - topView.width - scoreBoard.width - 50, height/5 - 40, P2D); 
-  hs = new HScrollbar(topView.width + scoreBoard.width + 40, height-25, 300, 15);
+  hs = new HScrollbar(topView.width + scoreBoard.width + 40, height-25, barChart.width, 15);
 }
 void draw() {
   directionalLight(50, 100, 125, 0, -1, 0);
