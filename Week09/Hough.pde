@@ -1,6 +1,6 @@
 ArrayList<PVector> hough(PImage edgeImg, int nLines) {
   ArrayList<Integer> bestCandidates = new ArrayList<Integer>();  
-  ArrayList<PVector> list = new ArrayList<PVector>();
+  ArrayList<PVector> intersections = new ArrayList<PVector>();
   float discretizationStepsPhi = 0.06f;
   float discretizationStepsR = 2.5f;
   // dimensions of the accumulator
@@ -82,7 +82,7 @@ ArrayList<PVector> hough(PImage edgeImg, int nLines) {
       int accR = idx - (accPhi + 1) * (rDim + 2) - 1;
       float r = (accR - (rDim - 1) * 0.5f) * discretizationStepsR;
       float phi = accPhi * discretizationStepsPhi;
-      list.add(new PVector(r, phi));
+      intersections.add(new PVector(r, phi));
       // Cartesian equation of a line: y = ax + b
       // in polar, y = (-cos(phi)/sin(phi))x + (r/sin(phi))
       // => y = 0 : x = r / cos(phi)
@@ -115,7 +115,7 @@ ArrayList<PVector> hough(PImage edgeImg, int nLines) {
       }
     }
   }
-  return list;
+  return intersections;
 }
 
 ArrayList<PVector> getIntersections(ArrayList<PVector> lines) {
