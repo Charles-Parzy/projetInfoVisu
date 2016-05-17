@@ -350,8 +350,8 @@ void drawQuad(QuadGraph q, ArrayList<PVector> lines) {
     PVector c23 = intersection(l2, l3);
     PVector c34 = intersection(l3, l4);
     PVector c41 = intersection(l4, l1);
-    if (q.isConvex(c12, c23, c34, c41) && q.validArea(c12, c23, c34, c41, width*height, (width*height)/6.0)
-      && q.nonFlatQuad(c12, c23, c34, c41)) {
+    if (q.isConvex(c12, c23, c34, c41) && q.nonFlatQuad(c12, c23, c34, c41)) {
+      //WE do not check valid area since an assistant told us it is bugged.
       // Choose a random, semi-transparent colour
       Random random = new Random();
       fill(color(min(255, random.nextInt(300)), 
