@@ -52,6 +52,7 @@ void draw() {
   /*********************************************
   *  Filters, edge detection and display
   *********************************************/
+  
   filterHue(img); //Write in tempImage
   gaussianBlur(tempImage); //Write in result
   intensityFilter(result); //Write in tempImage
