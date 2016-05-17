@@ -12,7 +12,7 @@ void settings() {
   size(1200, 300);
 }
 void setup() {
-  img = loadImage("board2.jpg");
+  img = loadImage("board1.jpg");
   tempImage = createImage(img.width, img.height, RGB);
   result = createImage(img.width, img.height, RGB);
   /********************************************
