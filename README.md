@@ -3,6 +3,6 @@
 ##Timetable:
 - ~~Currently finishing Milestone 1 goals.~~
 - ~~Currently finishing Milestone 1 goals.~~
-- Doing small improvements and style changes.
+- ~~Doing small improvements and style changes.~~
 
-
+**_Information to the TAs: Milestone2 submission is contained in the Milestone2 directoy_**
