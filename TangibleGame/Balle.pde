@@ -9,7 +9,7 @@ class Balle {
   }
 
   void drawBalle() {
-    //strokeWeight(0);
+    strokeWeight(0);
     fill(r, g, b);
     sphere(radius);
   }

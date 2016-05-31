@@ -25,7 +25,6 @@ Cylinder cylinder;
 //Processing windows
 ImageProcessing imgproc;
 
-
 void settings() {
   size(700, 700, P3D);
 }
@@ -44,40 +43,30 @@ void setup() {
   PApplet.runSketch(args, imgproc);
 }
 void draw() {
+  background(200);
   directionalLight(50, 100, 125, 0, -1, 0);
   ambientLight(102, 102, 102);
-  background(200);
   if(currentState.equals(GameState.GAME)) {
     pushMatrix();
+    //camera(width/2.0, -1000, depthCamera, width/2.0, height/2.0, 0, 0, 1, 0);
     camera(width/2, height/2, depthCamera, 250, 250, 0, 0, 1, 0);
     PVector rotation = imgproc.getRotation();
     plate.display();
     float rotX = (float)Math.toRadians(rotation.x);
-    float rotZ = (float)Math.toRadians(rotation.y);
-    //if(rotX < -PI/3) {
-    //  rotX = -PI/3;
-    //}else if (rotX > PI/3){
-    //  rotX = PI/3;
-    //}
-    //if(rotZ < -PI/3) {
-    //  rotZ = -PI/3;
-    //}else if (rotZ > PI/3){
-    //  rotZ = PI/3;
-    //}   
+    float rotZ = (float)Math.toRadians(rotation.y); 
     plate.angleX = rotX;
     plate.angleZ = rotZ;
     mover.update();
     mover.checkEdges();
     mover.checkCylinderCollision();
     mover.display();
-    popMatrix();
   } else {
     pushMatrix();
     camera(0, 0, depthCamera, 0, 0, 0, 0, 1, 0);
     plate.display();
     mover.display();
-    popMatrix();
   }
+  popMatrix();
   noLights(); //Permet de colorier la surface d'une couleur différente de la balle.
   drawSurface();
   hs.update();

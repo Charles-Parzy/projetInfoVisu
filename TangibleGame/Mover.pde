@@ -1,3 +1,5 @@
+import java.util.*;
+
 PVector location;
 float ELASTICITYCONSTANT = 0.7;
 
@@ -68,7 +70,9 @@ class Mover {
   }
 
   void checkCylinderCollision() {
-    for (PVector c : plate.cylinders) {
+    Iterator<PVector> iter = plate.cylinders.iterator();
+    while(iter.hasNext()) {
+      PVector c = iter.next();
       PVector distance = new PVector(c.x - location.x, c.y - location.z);
       if (distance.mag() < balle.radius + cylinderBaseSize/2) {
         lastScore = totalScore;
@@ -80,6 +84,7 @@ class Mover {
         location = new PVector(tempLoc.x, -plate.boxThickness/2 - balle.radius, tempLoc.y);
         tempVelocity.sub(unit.mult(2 * (tempVelocity.copy().dot(unit)))).mult(ELASTICITYCONSTANT);
         velocity = new PVector(tempVelocity.x, 0, tempVelocity.y);
+        iter.remove();
       }
     }
   }

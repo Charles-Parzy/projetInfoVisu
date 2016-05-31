@@ -5,6 +5,7 @@ class Cylinder {
   PShape openCylinder = new PShape();
   PShape bottomCylinder = new PShape();
   PShape topCylinder = new PShape();
+  Boolean isValid = true;
 
   Cylinder() {
     float angle;
