@@ -46,14 +46,14 @@ void draw() {
   background(200);
   directionalLight(50, 100, 125, 0, -1, 0);
   ambientLight(102, 102, 102);
-  if(currentState.equals(GameState.GAME)) {
+  if (currentState.equals(GameState.GAME)) {
     pushMatrix();
     //camera(width/2.0, -1000, depthCamera, width/2.0, height/2.0, 0, 0, 1, 0);
     camera(width/2, height/2, depthCamera, 250, 250, 0, 0, 1, 0);
     PVector rotation = imgproc.getRotation();
     plate.display();
-    float rotX = (float)Math.toRadians(rotation.x);
-    float rotZ = (float)Math.toRadians(rotation.y); 
+    float rotX = -(float)Math.toRadians(rotation.x);
+    float rotZ = -(float)Math.toRadians(rotation.y);
     plate.angleX = rotX;
     plate.angleZ = rotZ;
     mover.update();
@@ -71,6 +71,9 @@ void draw() {
   drawSurface();
   hs.update();
   hs.display();
+  PImage vid = imgproc.getVideo();
+  vid.resize(160,0);
+  image(vid, width-160.0,0.0); 
 }
 void mouseWheel(MouseEvent event) {
   plate.mouseWheel(event);

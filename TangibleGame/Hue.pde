@@ -4,8 +4,8 @@ void filterHue(PImage img) {
   color black = color(0, 0, 0);
   color white = color(255,255,255);
   float upperHue = 138;
-  float lowerHue = 75; //LES BORNES POUR ISOLER LA COULEUR VERTE
-  float upperBrightness = 232;
+  float lowerHue = 70; //LES BORNES POUR ISOLER LA COULEUR VERTE
+  float upperBrightness = 235;
   float lowerBrightness = 30;
   float upperSaturation = 260;
   float lowerSaturation = 99;  

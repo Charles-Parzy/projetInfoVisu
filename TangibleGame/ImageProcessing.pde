@@ -1,7 +1,8 @@
 import processing.video.*;
 
 class ImageProcessing extends PApplet {
-  Capture cam;
+  //Capture cam;
+  Movie cam;
 
   PImage img;
   PImage tempImage;
@@ -26,18 +27,20 @@ class ImageProcessing extends PApplet {
      *********************************************/
     tempImage = createImage(width, height, RGB);
     result = createImage(width, height, RGB);
-    String[] cameras = Capture.list();
-    if (cameras.length == 0) {
-    println("There are no cameras available for capture.");
-    exit();
-    } else {
-    println("Available cameras:");
-    for (int i = 0; i < cameras.length; i++) {
-    println(i + cameras[i]);
-    }
-    cam = new Capture(this, 640, 480, 30);
-    cam.start();
-    }
+    //String[] cameras = Capture.list();
+    //if (cameras.length == 0) {
+    //println("There are no cameras available for capture.");
+    //exit();
+    //} else {
+    //println("Available cameras:");
+    //for (int i = 0; i < cameras.length; i++) {
+    //println(i + cameras[i]);
+    //}
+    //cam = new Capture(this, 640, 480, 30);
+    //cam.start();
+    //}
+    cam = new Movie(this, "/Users/Mikael/Documents/TempInfoVisu/TangibleGame/data/testvideo.mp4"); 
+    cam.loop();
   }
   public void draw() {
     /*********************************************
@@ -47,7 +50,6 @@ class ImageProcessing extends PApplet {
     cam.read();
     }
     img = cam.get();
-
     /*********************************************
      *  Filters, edge detection and display
      *********************************************/
@@ -64,4 +66,8 @@ class ImageProcessing extends PApplet {
   PVector getRotation() {
    return new PVector(graph.getRotationX(), graph.getRotationZ());
   }  
+  
+  PImage getVideo() {
+    return img.copy();
+  }
 }
